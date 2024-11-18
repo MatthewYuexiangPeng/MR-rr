@@ -30,12 +30,10 @@
 # mean(abs(lm(lip_data$gamma_out ~ ., data = lip_data[,paste0('gamma_exp',1:24)])$coefficients))
 # # the scale is similar to the generated C in .simulation
 
-source("R/MR_rr_estimators.R")
-data("lip_data")
-data("lip_corr")
-data("lip_samplesize")
-
-set.seed(123)
+# source("R/MR_rr_estimators.R")
+# data("lip_data")
+# data("lip_corr")
+# data("lip_samplesize")
 
 
 # hidden functions ----------------------------------------------------------------
@@ -318,23 +316,16 @@ set.seed(123)
 #####
 
 
-#' Title
+#' The simulation function for the naive MR-rr estimator and the MR-rr estimator (with spectral regularization)
 #'
 #' @param regularized can be TRUE or FALSE, indicating whether we use the MR-rr estiomator with the spectral regularization. See the manuscript for more details.
 #' @param regularization_rate a small positive numerical value, indicating the regularization rate. It is only used when regularized = TRUE. The larger regularization_rate make the estimator having smaller variance, but the rate can not be too large to ensure consistency holds, see more details in the manuscript.
 #'
 #' @return a nested list of two list element for the simulation results, where the first list contains the bias of the naive MR-rr estimator comparing to true C for each entry; the second list contains the bias of the MR-rr estimator comparing to true C for each entry. For either bias list, the list have 5 list elements, corresponding to the measurement error weights (see more description in the "plot_boxplot" function) 1, 0.5, 0.2, 0.1, 0.05. Each element is 240 by 100, which is the number of entries and the iteration in the simulation.
 #' @export
-#'
-#' @examples
-#' result_AB_list = run_simulation(regularized = TRUE, regularization_rate = 1e-13)[[1]]
-#' result_AB_d_list = run_simulation(regularized = TRUE, regularization_rate = 1e-13)[[2]]
-#' str(result_AB_list)
-#' summary(unlist(result_AB_list))
-#' summary(unlist(result_AB_d_list))
 run_simulation <- function(regularized = TRUE, regularization_rate = 1e-13){
   sample_weight_list = c(1, 0.5, 0.2, 0.1, 0.05)
-  eloop = 10
+  eloop = 100
   result_AB_list = list("1" = NA, "0.5" = NA, "0.2" = NA, "0.1" = NA, "0.05" = NA)
   result_AB_d_list = list("1" = NA, "0.5" = NA, "0.2" = NA, "0.1" = NA, "0.05" = NA)
   for (me_weight in sample_weight_list) {
@@ -396,8 +387,7 @@ run_simulation <- function(regularized = TRUE, regularization_rate = 1e-13){
 }
 
 
-# choose the weight to plot (1, 0.5, 0.2, 0.1, 0.05)
-#' Title
+#' The function to create the boxplot for the bias of the naive MR-rr estimator and the MR-rr estimator (with spectral regularization) comparing to true C for each entry.
 #'
 #' @param result_AB_list a numerical list of the simulated bias of the naive MR-rr estimator comparing to true C for each entry. It is the first output of the function "run_simulation".
 #' @param result_AB_d_list a numerical list of the bias of the simulated MR-rr estimator comparing to true C for each entry. It is the second output of the function "run_simulation".
@@ -407,12 +397,6 @@ run_simulation <- function(regularized = TRUE, regularization_rate = 1e-13){
 #'
 #' @return the boxplot of the entries with top 5 largest bias or standard deviation of the naive MR-rr estimator and the MR-rr estimator. Return either a combined plot or separately plots depend on the input "individual_plot".
 #' @export
-#'
-#' @examples
-#' result_AB_list = run_simulation(regularized = TRUE)[[1]]
-#' result_AB_d_list = run_simulation(regularized = TRUE)[[2]]
-#' plot_boxplot(result_AB_list, result_AB_d_list, weight_to_plot = "0.2",
-#'              individual_plot = TRUE, rank_by = "bias")
 plot_boxplot <- function(result_AB_list, result_AB_d_list, weight_to_plot, individual_plot = FALSE, rank_by = "bias") {
   px <- 24
   py <- 10
@@ -495,7 +479,7 @@ plot_boxplot <- function(result_AB_list, result_AB_d_list, weight_to_plot, indiv
 }
 
 
-#' Title
+#' The function to generate the heatmap of the average absolute bias and the standard deviation of the naive MR-rr estimator and the MR-rr estimator (with spectral regularization).
 #'
 #' @param result_AB_list a numerical list of the simulated bias of the naive MR-rr estimator comparing to true C for each entry. It is the first output of the function "run_simulation".
 #' @param result_AB_d_list a numerical list of the bias of the simulated MR-rr estimator comparing to true C for each entry. It is the second output of the function "run_simulation".
@@ -503,11 +487,6 @@ plot_boxplot <- function(result_AB_list, result_AB_d_list, weight_to_plot, indiv
 #'
 #' @return four heatmaps containing the entry-wise average absolute bias and the standard deviation of the naive MR-rr estimator and the MR-rr estimator. Also return a list of numeric values including the IV strength under this measurement error weight, the mean absolute value of the entries of C, the average absolute bias of the naive MR-rr estimator and the MR-rr estimator, the standard deviation of the naive MR-rr estimator and the MR-rr estimator.
 #' @export
-#'
-#' @examples
-#' result_AB_list = run_simulation(regularized = TRUE)[[1]]
-#' result_AB_d_list = run_simulation(regularized = TRUE)[[2]]
-#' plot_heatmap(result_AB_list, result_AB_d_list, weight_to_plot = "0.2")
 plot_heatmap <- function(result_AB_list, result_AB_d_list, weight_to_plot) {
   px <- 24
   py <- 10

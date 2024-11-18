@@ -2,7 +2,7 @@
 % Please edit documentation in R/MR_rr_simulation.R
 \name{plot_heatmap}
 \alias{plot_heatmap}
-\title{Title}
+\title{The function to generate the heatmap of the average absolute bias and the standard deviation of the naive MR-rr estimator and the MR-rr estimator (with spectral regularization).}
 \usage{
 plot_heatmap(result_AB_list, result_AB_d_list, weight_to_plot)
 }
@@ -17,10 +17,5 @@ plot_heatmap(result_AB_list, result_AB_d_list, weight_to_plot)
 four heatmaps containing the entry-wise average absolute bias and the standard deviation of the naive MR-rr estimator and the MR-rr estimator. Also return a list of numeric values including the IV strength under this measurement error weight, the mean absolute value of the entries of C, the average absolute bias of the naive MR-rr estimator and the MR-rr estimator, the standard deviation of the naive MR-rr estimator and the MR-rr estimator.
 }
 \description{
-Title
-}
-\examples{
-result_AB_list = run_simulation(regularized = TRUE)[[1]]
-result_AB_d_list = run_simulation(regularized = TRUE)[[2]]
-plot_heatmap(result_AB_list, result_AB_d_list, weight_to_plot = "0.2")
+The function to generate the heatmap of the average absolute bias and the standard deviation of the naive MR-rr estimator and the MR-rr estimator (with spectral regularization).
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/MR_rr_simulation.R
 \name{plot_boxplot}
 \alias{plot_boxplot}
-\title{Title}
+\title{The function to create the boxplot for the bias of the naive MR-rr estimator and the MR-rr estimator (with spectral regularization) comparing to true C for each entry.}
 \usage{
 plot_boxplot(
   result_AB_list,
@@ -27,11 +27,5 @@ plot_boxplot(
 the boxplot of the entries with top 5 largest bias or standard deviation of the naive MR-rr estimator and the MR-rr estimator. Return either a combined plot or separately plots depend on the input "individual_plot".
 }
 \description{
-Title
-}
-\examples{
-result_AB_list = run_simulation(regularized = TRUE)[[1]]
-result_AB_d_list = run_simulation(regularized = TRUE)[[2]]
-plot_boxplot(result_AB_list, result_AB_d_list, weight_to_plot = "0.2",
-             individual_plot = TRUE, rank_by = "bias")
+The function to create the boxplot for the bias of the naive MR-rr estimator and the MR-rr estimator (with spectral regularization) comparing to true C for each entry.
 }

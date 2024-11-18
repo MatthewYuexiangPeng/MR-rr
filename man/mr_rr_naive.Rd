@@ -2,13 +2,24 @@
 % Please edit documentation in R/MR_rr_estimators.R
 \name{mr_rr_naive}
 \alias{mr_rr_naive}
-\title{Title}
+\title{Naive MR-rr estimator}
 \usage{
 mr_rr_naive(Y, X, r, sqrt_Gamma = NULL, sqrt_Gamma_inv = NULL)
 }
 \arguments{
-\item{sqrt_Gamma_inv}{}
+\item{Y}{a n by py numeric matrix, where n is the number of SNPs and py is the number of outcomes. This argument corresponds to the \eqn{\Gamma^T} in the manuscript.}
+
+\item{X}{a n by px numeric matrix, where n is the number of SNPs and px is the number of exposures. This argument corresponds to the \eqn{\gamma^T} in the manuscript.}
+
+\item{r}{an integer, indicating the rank of the causal effect matrix C we desire to estimate.}
+
+\item{sqrt_Gamma}{a py by py numeric matrix, the weight matrix used in the reduced rank regression method. It is recommended to be set as the square root of the inverse of the covariance matrix of the outcomes. If not provided, it is assumed to be the identity matrix. it corresponds to the \eqn{W^{\frac{1}{2}}} in the manuscript.}
+
+\item{sqrt_Gamma_inv}{the inverse of sqrt_Gamma.}
+}
+\value{
+a list of three matrices: A, B, and AB. A is a py by r matrix, B is a r by px matrix, and AB is a py by px matrix. The matrix A and B are the A and B identified by the naive MR-rr estimator, and there product AB is the estimated causal effect matrix C from exposures to the outcomes by the naive MR-rr estimator. See more details in the manuscript.
 }
 \description{
-Title
+Naive MR-rr estimator
 }

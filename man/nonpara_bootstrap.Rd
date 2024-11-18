@@ -2,7 +2,7 @@
 % Please edit documentation in R/bootstrap_CI.R
 \name{nonpara_bootstrap}
 \alias{nonpara_bootstrap}
-\title{Title}
+\title{Non-parametric bootstrap method to estimate variance of the Drr estimator}
 \usage{
 nonpara_bootstrap(
   me_weight = 0.2,
@@ -21,8 +21,5 @@ nonpara_bootstrap(
 The average coverage rate of the entry-wise 95\% confidence interval produced by non-parametric bootstrap method.
 }
 \description{
-Title
-}
-\examples{
-nonpara_bootstrap(me_weight = 0.2, regularized = TRUE, regularization_rate = 1e-13)
+Non-parametric bootstrap method to estimate variance of the Drr estimator
 }

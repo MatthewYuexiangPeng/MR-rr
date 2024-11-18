@@ -9,17 +9,14 @@
 # library(glmnet)
 
 
-source("R/MR_rr_simulation.R")
-source("R/MR_rr_estimators.R")
-data("lip_data")
-data("lip_corr")
-data("lip_samplesize")
-
-set.seed(123)
+# source("R/MR_rr_simulation.R")
+# source("R/MR_rr_estimators.R")
+# data("lip_data")
+# data("lip_corr")
+# data("lip_samplesize")
 
 
-# non-parametric bootstrap method to estimate variance of the Drr estimator ----
-#' Title
+#' Non-parametric bootstrap method to estimate variance of the Drr estimator
 #'
 #' @param me_weight a character value of a positive number, recommend to be chosen between 0.05 and 1. The argument indicates the measurement error weight, which means the scaler we multiply to the measurement error of the coefficients of exposure to SNPs, which is the \eqn{\Sigma_X} in the manuscript. Smaller measurement error weight implies larger IV strength.
 #' @param regularized can be TRUE or FALSE, indicating whether we use the MR-rr estiomator with the spectral regularization. See the manuscript for more details.
@@ -27,9 +24,6 @@ set.seed(123)
 #'
 #' @return The average coverage rate of the entry-wise 95% confidence interval produced by non-parametric bootstrap method.
 #' @export
-#'
-#' @examples
-#' nonpara_bootstrap(me_weight = 0.2, regularized = TRUE, regularization_rate = 1e-13)
 nonpara_bootstrap <- function(me_weight = 0.2, regularized = TRUE, regularization_rate = 1e-13){
   #### (a) get the parameters
   parameters = .get_parameters(me_weight = me_weight, px = 24, r_RR = 5)

@@ -1,4 +1,4 @@
-#' Title
+#' Naive MR-rr estimator
 #'
 #' @param Y a n by py numeric matrix, where n is the number of SNPs and py is the number of outcomes. This argument corresponds to the \eqn{\Gamma^T} in the manuscript.
 #' @param X a n by px numeric matrix, where n is the number of SNPs and px is the number of exposures. This argument corresponds to the \eqn{\gamma^T} in the manuscript.
@@ -31,7 +31,7 @@ mr_rr_naive = function(Y, X, r, sqrt_Gamma = NULL, sqrt_Gamma_inv = NULL) {
 }
 
 
-#' Title
+#' MR-rr estimator
 #'
 #' @param Y a n by py numeric matrix, where n is the number of SNPs and py is the number of outcomes. This argument corresponds to the \eqn{\Gamma^T} in the manuscript.
 #' @param X a n by px numeric matrix, where n is the number of SNPs and px is the number of exposures. This argument corresponds to the \eqn{\gamma^T} in the manuscript.
@@ -65,8 +65,8 @@ mr_rr = function(Y, X, r, Sigma_X, sqrt_Gamma = NULL, sqrt_Gamma_inv = NULL) {
 
 }
 
-# regularized
-#' Title
+
+#' MR-rr estimator with spectral regularization
 #'
 #' @param Y a n by py numeric matrix, where n is the number of SNPs and py is the number of outcomes. This argument corresponds to the \eqn{\Gamma^T} in the manuscript.
 #' @param X a n by px numeric matrix, where n is the number of SNPs and px is the number of exposures. This argument corresponds to the \eqn{\gamma^T} in the manuscript.
