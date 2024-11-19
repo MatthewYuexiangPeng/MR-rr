@@ -1,0 +1,43 @@
+---
+title: "Small demo of the MR.rr package"
+author: "Yuexiang Peng, Zhilong Zhang"
+date: "`r Sys.Date()`"
+output: 
+  rmarkdown::html_document:
+    toc: true
+    toc_float:
+      toc_collapsed: true
+    theme: united
+vignette: >
+  %\VignetteIndexEntry{Small demo}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This is a demo vignette for our package. We will generate 2-dimensional data that is a mixture of 3 Gaussians, and then use an EM algorithm to estimate a clustering of the data. 
+
+The following lines of code runs the entire example (simulating the data, running the EM algorithm, and computing the probabilities that each sample is drawn from each Gaussian cluster).
+
+```{r}
+library(MR.rr)
+set.seed(123)
+
+sim_result = run_simulation(regularized = TRUE, regularization_rate = 1e-13)
+result_AB_list = sim_result[[1]]
+result_AB_d_list = sim_result[[2]]
+str(result_AB_list)
+summary(unlist(result_AB_list))
+summary(unlist(result_AB_d_list))
+
+```
+
+
+
+
