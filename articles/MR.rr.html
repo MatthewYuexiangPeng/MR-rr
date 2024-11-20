@@ -115,36 +115,18 @@ the boxplot of the entry-wise bias of the causal effect matrix C.</p>
 <span><span class="co">#&gt; [[1]]$`(7, 5)`</span></span></code></pre>
 <p><img src="MR.rr_files/figure-html/unnamed-chunk-2-2.png" width="700"></p>
 <pre><code><span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; [[1]]$`(8, 5)`</span></span></code></pre>
-<p><img src="MR.rr_files/figure-html/unnamed-chunk-2-3.png" width="700"></p>
-<pre><code><span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; [[1]]$`(1, 5)`</span></span></code></pre>
-<p><img src="MR.rr_files/figure-html/unnamed-chunk-2-4.png" width="700"></p>
-<pre><code><span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; [[1]]$`(8, 6)`</span></span></code></pre>
-<p><img src="MR.rr_files/figure-html/unnamed-chunk-2-5.png" width="700"></p>
-<pre><code><span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[2]]</span></span>
 <span><span class="co">#&gt; [[2]]$`(6, 7)`</span></span></code></pre>
-<p><img src="MR.rr_files/figure-html/unnamed-chunk-2-6.png" width="700"></p>
+<p><img src="MR.rr_files/figure-html/unnamed-chunk-2-3.png" width="700"></p>
 <pre><code><span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [[2]]$`(6, 4)`</span></span></code></pre>
-<p><img src="MR.rr_files/figure-html/unnamed-chunk-2-7.png" width="700"></p>
-<pre><code><span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; [[2]]$`(9, 4)`</span></span></code></pre>
-<p><img src="MR.rr_files/figure-html/unnamed-chunk-2-8.png" width="700"></p>
-<pre><code><span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; [[2]]$`(10, 4)`</span></span></code></pre>
-<p><img src="MR.rr_files/figure-html/unnamed-chunk-2-9.png" width="700"></p>
-<pre><code><span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; [[2]]$`(7, 4)`</span></span></code></pre>
-<p><img src="MR.rr_files/figure-html/unnamed-chunk-2-10.png" width="700"></p>
+<p><img src="MR.rr_files/figure-html/unnamed-chunk-2-4.png" width="700"></p>
 <p>From the boxplot, we can see that the MR-rr estimator with
 regularization has a smaller bias than the naive MR-rr estimator. Then,
 we use the heatmap to visualize the bias and standard deviation of each
 entry of the estimator comapring to the causal effect C.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_heatmap.html">plot_heatmap</a></span><span class="op">(</span><span class="va">bias_naive_MRrr</span>, <span class="va">bias_MRrr_regularized</span>, weight_to_plot <span class="op">=</span> <span class="st">"0.2"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="MR.rr_files/figure-html/unnamed-chunk-3-1.png" width="700"><img src="MR.rr_files/figure-html/unnamed-chunk-3-2.png" width="700"><img src="MR.rr_files/figure-html/unnamed-chunk-3-3.png" width="700"><img src="MR.rr_files/figure-html/unnamed-chunk-3-4.png" width="700"></p>
 <pre><code><span><span class="co">#&gt; $iv_strength</span></span>
@@ -165,11 +147,11 @@ entry of the estimator comapring to the causal effect C.</p>
 <span><span class="co">#&gt; $mean_sd</span></span>
 <span><span class="co">#&gt; [1] 0.1997135</span></span></code></pre>
 <p>We see that when the IV strength is about 1.5, the MR-rr estimator
-with regularization has a smaller bias and standard deviation comparing
-to the naive MR-rr estimator.</p>
+with regularization has a smaller bias and similar standard deviation
+comparing to the naive MR-rr estimator.</p>
 <p>Finally, we test whether the bootstrap 95 percent confidence interval
 covers the true causal effect matrix C with about 95% probability.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/nonpara_bootstrap.html">nonpara_bootstrap</a></span><span class="op">(</span>me_weight <span class="op">=</span> <span class="fl">0.2</span>, regularized <span class="op">=</span> <span class="cn">TRUE</span>, regularization_rate <span class="op">=</span> <span class="fl">1e-13</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.847875</span></span></code></pre></div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
