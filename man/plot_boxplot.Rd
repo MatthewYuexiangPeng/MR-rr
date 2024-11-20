@@ -24,7 +24,7 @@ plot_boxplot(
 \item{rank_by}{a character value that can be chosen from "bias" or "sd". It indicates the criteria we use to rank the entries to plot. "bias" means we rank the entries by the average bias of each estimator, and "sd" means we rank the entries by the average standard deviation. The Default is "bias".}
 }
 \value{
-a list of the boxplot of the entries with largest bias or standard deviation of the naive MR-rr estimator and the MR-rr estimator. Return either a combined plot with 5 entries or 3 separately plots depend on the input "individual_plot".
+a list of the boxplot of the entries with largest bias or standard deviation of the naive MR-rr estimator and the MR-rr estimator. Return either a combined plot with 5 entries or 4 separately plots depend on the input "individual_plot".
 }
 \description{
 The function to create the boxplot for the bias of the naive MR-rr estimator and the MR-rr estimator (with spectral regularization) comparing to true C for each entry.

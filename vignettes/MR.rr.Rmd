@@ -61,7 +61,7 @@ We see that when the IV strength is about 1.5, the MR-rr estimator with regulari
 Finally, we test whether the bootstrap 95 percent confidence interval covers the true causal effect matrix C with about 95% probability.
 
 ```{r}
-nonpara_bootstrap(me_weight = 0.2, regularized = TRUE, regularization_rate = 1e-13)
+nonpara_bootstrap(me_weight = 1, regularized = TRUE, regularization_rate = 1e-13)
 ```
 
 
