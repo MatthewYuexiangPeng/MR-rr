@@ -56,7 +56,7 @@ From the boxplot, we can see that the MR-rr estimator with regularization has a 
 plot_heatmap(bias_naive_MRrr, bias_MRrr_regularized, weight_to_plot = "0.2")
 ```
 
-We see that when the IV strength is about 1.5, the MR-rr estimator with regularization has a smaller bias and standard deviation comparing to the naive MR-rr estimator.
+We see that when the IV strength is about 1.5, the MR-rr estimator with regularization has a smaller bias and similar standard deviation comparing to the naive MR-rr estimator.
 
 Finally, we test whether the bootstrap 95 percent confidence interval covers the true causal effect matrix C with about 95% probability.
 

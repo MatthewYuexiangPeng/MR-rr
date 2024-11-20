@@ -395,7 +395,7 @@ run_simulation <- function(regularized = TRUE, regularization_rate = 1e-13){
 #' @param individual_plot a logical value TRUE or FALSE. TRUE indicates to plot the boxplot for entries of C separately. FALSE indicates to crate combined plot including both estimators for some entries of C. The Default is FALSE.
 #' @param rank_by a character value that can be chosen from "bias" or "sd". It indicates the criteria we use to rank the entries to plot. "bias" means we rank the entries by the average bias of each estimator, and "sd" means we rank the entries by the average standard deviation. The Default is "bias".
 #'
-#' @return a list of the boxplot of the entries with largest bias or standard deviation of the naive MR-rr estimator and the MR-rr estimator. Return either a combined plot with 5 entries or 3 separately plots depend on the input "individual_plot".
+#' @return a list of the boxplot of the entries with largest bias or standard deviation of the naive MR-rr estimator and the MR-rr estimator. Return either a combined plot with 5 entries or 4 separately plots depend on the input "individual_plot".
 #' @export
 plot_boxplot <- function(result_AB_list, result_AB_d_list, weight_to_plot, individual_plot = FALSE, rank_by = "bias") {
   px <- 24
@@ -439,10 +439,10 @@ plot_boxplot <- function(result_AB_list, result_AB_d_list, weight_to_plot, indiv
   if (individual_plot){
     if (rank_by == "bias") {
       # individual box plot
-      return(list(myplots[index1][1:5], myplots_d[index1_d][1:5]))
+      return(list(myplots[index1][1:2], myplots_d[index1_d][1:2]))
     } else if (rank_by == "sd"){
       # individual box plot
-      return(list(myplots[index2][1:5], myplots_d[index2_d][1:5]))
+      return(list(myplots[index2][1:2], myplots_d[index2_d][1:2]))
     } else {
       stop("rank_by should be either 'bias' or 'sd'")
     }
