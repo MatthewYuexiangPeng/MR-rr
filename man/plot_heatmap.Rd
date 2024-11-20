@@ -14,7 +14,7 @@ plot_heatmap(result_AB_list, result_AB_d_list, weight_to_plot)
 \item{weight_to_plot}{a character value that can be chosen from "1", "0.5", "0.2", "0.1", "0.05", indicating the plot we want to make under what measurement error weight. The weight means the scaler we multiply to the measurement error of the coefficients of exposure to SNPs, which is the \eqn{\Sigma_X} in the manuscript. Smaller measurement error weight implies larger IV strength.}
 }
 \value{
-four heatmaps containing the entry-wise average absolute bias and the standard deviation of the naive MR-rr estimator and the MR-rr estimator. Also return a list of numeric values including the IV strength under this measurement error weight, the mean absolute value of the entries of C, the average absolute bias of the naive MR-rr estimator and the MR-rr estimator, the standard deviation of the naive MR-rr estimator and the MR-rr estimator.
+four heatmaps containing the entry-wise average absolute bias and the standard deviation of the naive MR-rr estimator and the MR-rr estimator, and the numeric values including the IV strength under this measurement error weight, the mean absolute value of the entries of C, the average absolute bias of the naive MR-rr estimator and the MR-rr estimator, the standard deviation of the naive MR-rr estimator and the MR-rr estimator.
 }
 \description{
 The function to generate the heatmap of the average absolute bias and the standard deviation of the naive MR-rr estimator and the MR-rr estimator (with spectral regularization).

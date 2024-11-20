@@ -24,7 +24,7 @@ library(MR.rr")
 
 # Dependencies
 
-The package depends on the following packages: `MASS` and `mvtnorm`.
+The package depends on the following packages: `MASS`, `ggplot2`, `patchwork`, and `pheatmap`.
 
 # Session info
 

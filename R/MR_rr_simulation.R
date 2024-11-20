@@ -106,14 +106,14 @@
 .plot_entrybias = function (data) {
   ggplot2::ggplot()+
     ggplot2::geom_boxplot(ggplot2::aes(y = data))+
-    ggplot2::labs(title = "AB_hat - C_r entry", y = "AB_hat - C_r entry")
+    ggplot2::labs(title = "naive_MRrr", y = "entrywise bias")
 }
 
 
 .plot_entrybias_d = function (data) {
   ggplot2::ggplot()+
     ggplot2::geom_boxplot(ggplot2::aes(y = data))+
-    ggplot2::labs(title = "debiased_AB_hat - C_r entry", y = "debiased_AB_hat - C_r entry")
+    ggplot2::labs(title = "MRrr", y = "entrywise bias")
 }
 
 
@@ -395,7 +395,7 @@ run_simulation <- function(regularized = TRUE, regularization_rate = 1e-13){
 #' @param individual_plot a logical value TRUE or FALSE. TRUE indicates to plot the boxplot for entries of C separately. FALSE indicates to crate combined plot including both estimators for some entries of C. The Default is FALSE.
 #' @param rank_by a character value that can be chosen from "bias" or "sd". It indicates the criteria we use to rank the entries to plot. "bias" means we rank the entries by the average bias of each estimator, and "sd" means we rank the entries by the average standard deviation. The Default is "bias".
 #'
-#' @return the boxplot of the entries with top 5 largest bias or standard deviation of the naive MR-rr estimator and the MR-rr estimator. Return either a combined plot or separately plots depend on the input "individual_plot".
+#' @return a list of the boxplot of the entries with largest bias or standard deviation of the naive MR-rr estimator and the MR-rr estimator. Return either a combined plot with 5 entries or 3 separately plots depend on the input "individual_plot".
 #' @export
 plot_boxplot <- function(result_AB_list, result_AB_d_list, weight_to_plot, individual_plot = FALSE, rank_by = "bias") {
   px <- 24
@@ -439,12 +439,10 @@ plot_boxplot <- function(result_AB_list, result_AB_d_list, weight_to_plot, indiv
   if (individual_plot){
     if (rank_by == "bias") {
       # individual box plot
-      myplots[index1]
-      myplots_d[index1_d]
+      return(list(myplots[index1][1:5], myplots_d[index1_d][1:5]))
     } else if (rank_by == "sd"){
       # individual box plot
-      myplots[index2]
-      myplots_d[index2_d]
+      return(list(myplots[index2][1:5], myplots_d[index2_d][1:5]))
     } else {
       stop("rank_by should be either 'bias' or 'sd'")
     }
@@ -456,11 +454,12 @@ plot_boxplot <- function(result_AB_list, result_AB_d_list, weight_to_plot, indiv
         myplots[[index1[5]]] + myplots[[index1[4]]] + myplots[[index1[3]]] +
         myplots[[index1[2]]] + myplots[[index1[1]]] + patchwork::plot_layout(nrow = 2, ncol = 5) +
         patchwork::plot_annotation(
-          title = "Top five entry-wise difference between C_r_hat (= AB_hat) and C_r, ranked by mean",
-          subtitle = sprintf("px = 100, rank C = reduced rank = 5, Sigma_X multiplied by %s", weight_to_plot),
-          caption = "C_r defined as minimizing modified objective function of
-          2.2 or equivalent objective function of 2.1")
-      combined_plot
+          title = "Bias boxplots of the entries with top 5 average bias \n for the MR-rr and naive MR-rr estimator",
+          subtitle = sprintf("rank C = 5, Sigma_X multiplied by %s", weight_to_plot)
+          # caption = "C_r defined as minimizing modified objective function of
+          # 2.2 or equivalent objective function of 2.1"
+          )
+      return(combined_plot)
     } else if (rank_by == "sd"){
       # rank by var
       combined_plot_var <- myplots_d[[index2_d[5]]] + myplots_d[[index2_d[4]]] +
@@ -468,11 +467,12 @@ plot_boxplot <- function(result_AB_list, result_AB_d_list, weight_to_plot, indiv
         myplots[[index2[5]]] + myplots[[index2[4]]] + myplots[[index2[3]]] +
         myplots[[index2[2]]] + myplots[[index2[1]]] + patchwork::plot_layout(nrow = 2, ncol = 5) +
         patchwork::plot_annotation(
-          title = "Top five entry-wise difference between C_r_hat (= AB_hat) and C_r, ranked by var",
-          subtitle = sprintf("px = 100, rank C = reduced rank = 5, Sigma_X multiplied by %s", weight_to_plot),
-          caption = "C_r defined as minimizing modified objective function of
-          2.2 or equivalent objective function of 2.1")
-      combined_plot_var
+          title = "Bias boxplots of the entries with top 5 standard deviation \n for the MR-rr and naive MR-rr estimator",
+          subtitle = sprintf("rank C = 5, Sigma_X multiplied by %s", weight_to_plot)
+          # caption = "C_r defined as minimizing modified objective function of
+          # 2.2 or equivalent objective function of 2.1"
+          )
+      return(combined_plot_var)
     } else {
       stop("rank_by should be either 'bias' or 'sd'")}
   }
@@ -485,7 +485,7 @@ plot_boxplot <- function(result_AB_list, result_AB_d_list, weight_to_plot, indiv
 #' @param result_AB_d_list a numerical list of the bias of the simulated MR-rr estimator comparing to true C for each entry. It is the second output of the function "run_simulation".
 #' @param weight_to_plot a character value that can be chosen from "1", "0.5", "0.2", "0.1", "0.05", indicating the plot we want to make under what measurement error weight. The weight means the scaler we multiply to the measurement error of the coefficients of exposure to SNPs, which is the \eqn{\Sigma_X} in the manuscript. Smaller measurement error weight implies larger IV strength.
 #'
-#' @return four heatmaps containing the entry-wise average absolute bias and the standard deviation of the naive MR-rr estimator and the MR-rr estimator. Also return a list of numeric values including the IV strength under this measurement error weight, the mean absolute value of the entries of C, the average absolute bias of the naive MR-rr estimator and the MR-rr estimator, the standard deviation of the naive MR-rr estimator and the MR-rr estimator.
+#' @return four heatmaps containing the entry-wise average absolute bias and the standard deviation of the naive MR-rr estimator and the MR-rr estimator, and the numeric values including the IV strength under this measurement error weight, the mean absolute value of the entries of C, the average absolute bias of the naive MR-rr estimator and the MR-rr estimator, the standard deviation of the naive MR-rr estimator and the MR-rr estimator.
 #' @export
 plot_heatmap <- function(result_AB_list, result_AB_d_list, weight_to_plot) {
   px <- 24
@@ -533,14 +533,17 @@ plot_heatmap <- function(result_AB_list, result_AB_d_list, weight_to_plot) {
   breaks <- seq(min_value, max_value, length.out = 101)
 
   pheatmap::pheatmap(avg_bias, breaks = breaks,
-                                main = sprintf("AB_hat - C_r entry-wise bias' absolute value, weight = %s, px = %s",weight_to_plot, px), fontsize = 8,
-                                cluster_rows = FALSE, cluster_cols = FALSE,
-                                color = colorRampPalette(c("white", "red"))(100))
+                     main = sprintf("Absolute bias of the naive MR-rr estimator by entry, weight = %s",weight_to_plot), fontsize = 8,
+                     cluster_rows = FALSE, cluster_cols = FALSE,
+                     color = colorRampPalette(c("white", "red"))(100),
+                     height = 10,
+                     width = 8)
   pheatmap::pheatmap(avg_bias_d, breaks = breaks,
-                          main = sprintf("AB_d_hat - C_r entry-wise bias' absolute value, weight = %s, px = %s",weight_to_plot, px), fontsize = 8,
-                          cluster_rows = FALSE, cluster_cols = FALSE,
-                          color = colorRampPalette(c("white", "red"))(100))
-
+                     main = sprintf("Absolute bias of the MR-rr estimator by entry, weight = %s",weight_to_plot), fontsize = 8,
+                     cluster_rows = FALSE, cluster_cols = FALSE,
+                     color = colorRampPalette(c("white", "red"))(100),
+                     height = 10,
+                     width = 8)
 
   # sd heatmap
   # RR
@@ -570,14 +573,20 @@ plot_heatmap <- function(result_AB_list, result_AB_d_list, weight_to_plot) {
   max_value_Sd <- max(max(avg_sd),max(avg_sd_d))
   breaks_sd <- seq(min_value_sd, max_value_Sd, length.out = 101)
 
+
   pheatmap::pheatmap(avg_sd, breaks = breaks_sd,
-                              main = sprintf("AB_hat - C_r entry-wise sd, weight = %s, px = %s",weight_to_plot,px), fontsize = 8,
-                              cluster_rows = FALSE, cluster_cols = FALSE,
-                              color = colorRampPalette(c("white", "red"))(100))
+                     main = sprintf("SD of the naive MR-rr estimator by entry, weight = %s",weight_to_plot), fontsize = 8,
+                     cluster_rows = FALSE, cluster_cols = FALSE,
+                     color = colorRampPalette(c("white", "red"))(100),
+                     height = 10,
+                     width = 8)
+
   pheatmap::pheatmap(avg_sd_d, breaks = breaks_sd,
-                       main = sprintf("AB_d_hat - C_r entry-wise sd, weight = %s, px = %s",weight_to_plot,px), fontsize = 8,
-                       cluster_rows = FALSE, cluster_cols = FALSE,
-                       color = colorRampPalette(c("white", "red"))(100))
+                     main = sprintf("SD of the MR-rr estimator by entry, weight = %s",weight_to_plot), fontsize = 8,
+                     cluster_rows = FALSE, cluster_cols = FALSE,
+                     color = colorRampPalette(c("white", "red"))(100),
+                     height = 10,
+                     width = 8)
 
   # compute average iv strength
   iv_list = list()
