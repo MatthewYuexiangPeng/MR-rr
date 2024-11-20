@@ -29,13 +29,8 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
+<li class="active nav-item"><a class="nav-link" href="../articles/MR.rr.html">Get Started</a></li>
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
-<li class="active nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/MR.rr.html">Small demo of the MR.rr package</a></li>
-  </ul>
-</li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><form class="form-inline" role="search">
@@ -66,32 +61,117 @@ Zhilong Zhang</h4>
 
     
     
-<p>This is a demo vignette for our package. We will generate
-2-dimensional data that is a mixture of 3 Gaussians, and then use an EM
-algorithm to estimate a clustering of the data.</p>
-<p>The following lines of code runs the entire example (simulating the
-data, running the EM algorithm, and computing the probabilities that
-each sample is drawn from each Gaussian cluster).</p>
+<p>This is a vignette for our MR-rr package. This package contains three
+estimators, including the naive MR-rr estimator, the MR-rr estimator,
+and the the MR-rr estimator with regularization. The package also
+contains functions to perform simulation to test the estimators.</p>
+<p>We will use the GWAS-Lipid data incorporated in the package to
+generate the true parameters and a rank 5 causal effect matrix C from 24
+dimension exposures to 10 dimension outcomes. Then we will simulate the
+data with the true parameters and run the naive MR-rr estimator and
+MR-rr estimator with regularization to compare the performance with
+respect to true C.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://matthewyuexiangpeng.github.io/MR.rr/" class="external-link">MR.rr</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://matthewyuexiangpeng.github.io/MR.rr/">MR.rr</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">sim_result</span> <span class="op">=</span> <span class="fu"><a href="../reference/run_simulation.html">run_simulation</a></span><span class="op">(</span>regularized <span class="op">=</span> <span class="cn">TRUE</span>, regularization_rate <span class="op">=</span> <span class="fl">1e-13</span><span class="op">)</span></span>
-<span><span class="va">result_AB_list</span> <span class="op">=</span> <span class="va">sim_result</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span><span class="va">result_AB_d_list</span> <span class="op">=</span> <span class="va">sim_result</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">result_AB_list</span><span class="op">)</span></span>
+<span><span class="va">bias_naive_MRrr</span> <span class="op">=</span> <span class="va">sim_result</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">bias_MRrr_regularized</span> <span class="op">=</span> <span class="va">sim_result</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="st">"This is a demo of the output format of the run_simulation function:"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "This is a demo of the output format of the run_simulation function:"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">bias_naive_MRrr</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 5</span></span>
 <span><span class="co">#&gt;  $ 1   : num [1:240, 1:100] -0.306 -0.484 -0.363 -0.956 -0.666 ...</span></span>
 <span><span class="co">#&gt;  $ 0.5 : num [1:240, 1:100] 0.2862 0.0387 0.0183 -0.084 0.2477 ...</span></span>
 <span><span class="co">#&gt;  $ 0.2 : num [1:240, 1:100] -0.1484 -0.4429 -0.0831 -0.0357 -0.103 ...</span></span>
 <span><span class="co">#&gt;  $ 0.1 : num [1:240, 1:100] 0.2835 0.4905 -0.1222 0.2139 -0.0222 ...</span></span>
 <span><span class="co">#&gt;  $ 0.05: num [1:240, 1:100] -0.152 0.282 -0.214 0.189 0.289 ...</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">result_AB_list</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="st">"This is a summary of the entrywise bias of the naive MR-rr estimator:"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "This is a summary of the entrywise bias of the naive MR-rr estimator:"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">bias_naive_MRrr</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;       Min.    1st Qu.     Median       Mean    3rd Qu.       Max. </span></span>
 <span><span class="co">#&gt; -11.359299  -0.243075  -0.001497   0.008942   0.249032  13.449512</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">result_AB_d_list</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="st">"This is a summary of the entrywise bias of the MR-rr estimator with regularization:"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "This is a summary of the entrywise bias of the MR-rr estimator with regularization:"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">bias_MRrr_regularized</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;       Min.    1st Qu.     Median       Mean    3rd Qu.       Max. </span></span>
 <span><span class="co">#&gt; -14.409892  -0.165789   0.000838   0.001587   0.171261  12.509527</span></span></code></pre></div>
+<p>From a rough glance, we can see that the MR-rr estimator with
+regularization has a smaller bias than the naive MR-rr estimator. We can
+also visualize the results by plotting the boxplots of the bias and the
+heatmaps of the bias and standard deviation by the following
+functions.</p>
+<p>The boxplots function takes the bias matrices of the naive MR-rr
+estimator and the MR-rr estimator with regularization as input and plots
+the boxplot of the entry-wise bias of the causal effect matrix C.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_boxplot.html">plot_boxplot</a></span><span class="op">(</span><span class="va">bias_naive_MRrr</span>, <span class="va">bias_MRrr_regularized</span>, weight_to_plot <span class="op">=</span> <span class="st">"0.2"</span>,</span>
+<span>             individual_plot <span class="op">=</span> <span class="cn">TRUE</span>, rank_by <span class="op">=</span> <span class="st">"bias"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [[1]]</span></span>
+<span><span class="co">#&gt; [[1]]$`(7, 6)`</span></span></code></pre></div>
+<p><img src="MR.rr_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
+<pre><code><span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[1]]$`(7, 5)`</span></span></code></pre>
+<p><img src="MR.rr_files/figure-html/unnamed-chunk-2-2.png" width="700"></p>
+<pre><code><span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[1]]$`(8, 5)`</span></span></code></pre>
+<p><img src="MR.rr_files/figure-html/unnamed-chunk-2-3.png" width="700"></p>
+<pre><code><span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[1]]$`(1, 5)`</span></span></code></pre>
+<p><img src="MR.rr_files/figure-html/unnamed-chunk-2-4.png" width="700"></p>
+<pre><code><span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[1]]$`(8, 6)`</span></span></code></pre>
+<p><img src="MR.rr_files/figure-html/unnamed-chunk-2-5.png" width="700"></p>
+<pre><code><span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[2]]</span></span>
+<span><span class="co">#&gt; [[2]]$`(6, 7)`</span></span></code></pre>
+<p><img src="MR.rr_files/figure-html/unnamed-chunk-2-6.png" width="700"></p>
+<pre><code><span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[2]]$`(6, 4)`</span></span></code></pre>
+<p><img src="MR.rr_files/figure-html/unnamed-chunk-2-7.png" width="700"></p>
+<pre><code><span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[2]]$`(9, 4)`</span></span></code></pre>
+<p><img src="MR.rr_files/figure-html/unnamed-chunk-2-8.png" width="700"></p>
+<pre><code><span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[2]]$`(10, 4)`</span></span></code></pre>
+<p><img src="MR.rr_files/figure-html/unnamed-chunk-2-9.png" width="700"></p>
+<pre><code><span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[2]]$`(7, 4)`</span></span></code></pre>
+<p><img src="MR.rr_files/figure-html/unnamed-chunk-2-10.png" width="700"></p>
+<p>From the boxplot, we can see that the MR-rr estimator with
+regularization has a smaller bias than the naive MR-rr estimator. Then,
+we use the heatmap to visualize the bias and standard deviation of each
+entry of the estimator comapring to the causal effect C.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_heatmap.html">plot_heatmap</a></span><span class="op">(</span><span class="va">bias_naive_MRrr</span>, <span class="va">bias_MRrr_regularized</span>, weight_to_plot <span class="op">=</span> <span class="st">"0.2"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="MR.rr_files/figure-html/unnamed-chunk-3-1.png" width="700"><img src="MR.rr_files/figure-html/unnamed-chunk-3-2.png" width="700"><img src="MR.rr_files/figure-html/unnamed-chunk-3-3.png" width="700"><img src="MR.rr_files/figure-html/unnamed-chunk-3-4.png" width="700"></p>
+<pre><code><span><span class="co">#&gt; $iv_strength</span></span>
+<span><span class="co">#&gt; [1] 1.553794</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $mean_abs_C_entry</span></span>
+<span><span class="co">#&gt; [1] 0.7306248</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $mean_abs_bias_naive</span></span>
+<span><span class="co">#&gt; [1] 0.2160581</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $mean_abs_bias</span></span>
+<span><span class="co">#&gt; [1] 0.1050927</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $mean_sd_naive</span></span>
+<span><span class="co">#&gt; [1] 0.1602343</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $mean_sd</span></span>
+<span><span class="co">#&gt; [1] 0.1997135</span></span></code></pre>
+<p>We see that when the IV strength is about 1.5, the MR-rr estimator
+with regularization has a smaller bias and standard deviation comparing
+to the naive MR-rr estimator.</p>
+<p>Finally, we test whether the bootstrap 95 percent confidence interval
+covers the true causal effect matrix C with about 95% probability.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/nonpara_bootstrap.html">nonpara_bootstrap</a></span><span class="op">(</span>me_weight <span class="op">=</span> <span class="fl">0.2</span>, regularized <span class="op">=</span> <span class="cn">TRUE</span>, regularization_rate <span class="op">=</span> <span class="fl">1e-13</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.847875</span></span></code></pre></div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
