@@ -80,7 +80,7 @@
   }
 
   # compute A_hat, B_hat
-  result <- mr_rr_naive(y_j_hat, x_j_hat, r=r_RR, W) # TODO: changed here need check the result
+  result <- mr_rr_naive(y_j_hat, x_j_hat, r=r_RR, W=W) # TODO: changed here need check the result
   A_hat = result$A
   B_hat = result$B
   AB_hat = result$AB # sample level estimator A_hat * B_hat
