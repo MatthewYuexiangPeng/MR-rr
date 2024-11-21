@@ -603,8 +603,8 @@ plot_heatmap <- function(result_AB_list, result_AB_d_list, weight_to_plot) {
   mean_abs_C_entry =  mean(abs(as.matrix(C_r)))
   mean_abs_bias_naive = mean(abs(as.matrix(avg_bias)))
   mean_abs_bias = mean(abs(as.matrix(avg_bias_d)))
-  mean_sd_naive = mean(as.matrix(avg_sd_d))
-  mean_sd = mean(as.matrix(avg_sd))
+  mean_sd_naive = mean(as.matrix(avg_sd))
+  mean_sd = mean(as.matrix(avg_sd_d))
   #####
 
   return(list(iv_strength = iv_strength, mean_abs_C_entry = mean_abs_C_entry,

@@ -87,7 +87,7 @@ From the boxplot, we can see that the MR-rr estimator with regularization has a 
 plot_heatmap(bias_naive_MRrr, bias_MRrr_regularized, weight_to_plot = "0.2")
 ```
 
-We see that when the IV strength is about 1.5, the MR-rr estimator with regularization has a smaller bias and similar standard deviation comparing to the naive MR-rr estimator.
+We see that when the IV strength is about 1.5, the MR-rr estimator with regularization has both smaller bias and smaller standard deviation comparing to the naive MR-rr estimator.
 
 # The usage of the nonpara_bootstrap function
 
@@ -95,7 +95,7 @@ Finally, we test whether the bootstrap 95 percent confidence interval covers the
 
 ```{r}
 print("The bootstrap coverage rate is:")
-nonpara_bootstrap(me_weight = 1, regularized = TRUE, regularization_rate = 1e-13)
+nonpara_bootstrap(me_weight = 0.5, regularized = TRUE, regularization_rate = 1e-13)
 ```
 
 
