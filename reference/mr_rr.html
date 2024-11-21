@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">MR.rr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,7 +38,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">mr_rr</span><span class="op">(</span><span class="va">Y</span>, <span class="va">X</span>, <span class="va">r</span>, <span class="va">Sigma_X</span>, sqrt_Gamma <span class="op">=</span> <span class="cn">NULL</span>, sqrt_Gamma_inv <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">mr_rr</span><span class="op">(</span><span class="va">Y</span>, <span class="va">X</span>, <span class="va">r</span>, <span class="va">Sigma_X</span>, W <span class="op">=</span> <span class="cn">NULL</span>, W_inv <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -61,12 +61,12 @@
 <dd><p>a px by px numeric matrix, the average conditional covariance matrix of the coefficients of regressing exposures on SNPs, which can be culculated by averaging the regression SEs across all SNPs. It corresponds to the \(\Sigma_X\) in the manuscript, see more details in the estimator section of the manuscript.</p></dd>
 
 
-<dt id="arg-sqrt-gamma">sqrt_Gamma<a class="anchor" aria-label="anchor" href="#arg-sqrt-gamma"></a></dt>
-<dd><p>a py by py numeric matrix, the weight matrix used in the reduced rank regression method. It is recommended to be set as the square root of the inverse of the covariance matrix of the outcomes. If not provided, it is assumed to be the identity matrix. it corresponds to the \(W^{\frac{1}{2}}\) in the manuscript.</p></dd>
+<dt id="arg-w">W<a class="anchor" aria-label="anchor" href="#arg-w"></a></dt>
+<dd><p>a py by py numeric matrix, the weight matrix used in the reduced rank regression method. It is recommended to be set as the inverse of the covariance matrix of the outcomes. If not provided, it is assumed to be the identity matrix. it corresponds to the \(W^{\frac{1}{2}}\) in the manuscript.</p></dd>
 
 
-<dt id="arg-sqrt-gamma-inv">sqrt_Gamma_inv<a class="anchor" aria-label="anchor" href="#arg-sqrt-gamma-inv"></a></dt>
-<dd><p>the inverse of sqrt_Gamma.</p></dd>
+<dt id="arg-w-inv">W_inv<a class="anchor" aria-label="anchor" href="#arg-w-inv"></a></dt>
+<dd><p>the inverse of W</p></dd>
 
 </dl></div>
     <div class="section level2">
