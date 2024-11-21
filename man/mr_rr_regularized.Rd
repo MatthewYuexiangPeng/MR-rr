@@ -10,8 +10,8 @@ mr_rr_regularized(
   r,
   Sigma_X,
   regularization_rate = 1e-13,
-  sqrt_Gamma = NULL,
-  sqrt_Gamma_inv = NULL
+  W = NULL,
+  W_inv = NULL
 )
 }
 \arguments{
@@ -25,9 +25,9 @@ mr_rr_regularized(
 
 \item{regularization_rate}{a numeric value, the regularization rate used in the MR-rr estimator with spectral regularization. It corresponds to the \eqn{\phi} in the manuscript, see more details in the estimator section of the manuscript.}
 
-\item{sqrt_Gamma}{a py by py numeric matrix, the weight matrix used in the reduced rank regression method. It is recommended to be set as the square root of the inverse of the covariance matrix of the outcomes. If not provided, it is assumed to be the identity matrix. it corresponds to the \eqn{W^{\frac{1}{2}}} in the manuscript.}
+\item{W}{a py by py numeric matrix, the weight matrix used in the reduced rank regression method. It is recommended to be set as the inverse of the covariance matrix of the outcomes. If not provided, it is assumed to be the identity matrix. it corresponds to the \eqn{W^{\frac{1}{2}}} in the manuscript.}
 
-\item{sqrt_Gamma_inv}{the inverse of sqrt_Gamma.}
+\item{W_inv}{the inverse of W}
 }
 \value{
 a list of three matrices: A, B, and AB. A is a py by r matrix, B is a r by px matrix, and AB is a py by px matrix. The matrix A and B are the A and B identified by the MR-rr estimator with spectral regularization, and there product AB is the estimated causal effect matrix C from exposures to the outcomes by the MR-rr estimator with spectral regularization. See more details in the manuscript.

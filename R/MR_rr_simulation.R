@@ -64,6 +64,7 @@
   C = parameters$C
   r_RR = parameters$r_RR
   VY_tilde = parameters$VY_tilde
+  W = parameters$weight.matrix
   W_sqrt = .sqrt_matrix(parameters$weight.matrix)
 
   # sample true effect gamma_j_star(xj) and Gamma_j_star(yj)
@@ -79,16 +80,16 @@
   }
 
   # compute A_hat, B_hat
-  result <- mr_rr_naive(y_j_hat, x_j_hat, r=r_RR, W_sqrt) # TODO: changed here need check the result
+  result <- mr_rr_naive(y_j_hat, x_j_hat, r=r_RR, W) # TODO: changed here need check the result
   A_hat = result$A
   B_hat = result$B
   AB_hat = result$AB # sample level estimator A_hat * B_hat
 
   # need to subtract the Sigma_xx by Sigma_x. Sigma_x can be estimated by the regression of exp ~ z (have been approximate in the get parameter function)
   if (regularized == FALSE) {
-    result_d <- mr_rr(y_j_hat, x_j_hat, r=r_RR, sqrt_Gamma = W_sqrt, Sigma_X = Sigma_X)
+    result_d <- mr_rr(y_j_hat, x_j_hat, r=r_RR, W = W, Sigma_X = Sigma_X)
   } else {
-    result_d <- mr_rr_regularized(y_j_hat, x_j_hat, r=r_RR, sqrt_Gamma = W_sqrt, Sigma_X = Sigma_X, regularization_rate=regularization_rate)
+    result_d <- mr_rr_regularized(y_j_hat, x_j_hat, r=r_RR, W = W, Sigma_X = Sigma_X, regularization_rate=regularization_rate)
   }
   A_d_hat = result_d$A
   B_d_hat = result_d$B

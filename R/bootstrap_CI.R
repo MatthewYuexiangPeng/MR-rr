@@ -74,9 +74,9 @@ nonpara_bootstrap <- function(me_weight = 0.2, regularized = TRUE, regularizatio
 
       # estimate C_drr_hat
       if (regularized == FALSE) {
-        result_d_bt <- mr_rr(y_j_hat_star, x_j_hat_star, r=5, sqrt_Gamma = .sqrt_matrix(solve(Sigma_Y_hat)), Sigma_X = Sigma_X_hat)
+        result_d_bt <- mr_rr(y_j_hat_star, x_j_hat_star, r=5, W = solve(Sigma_Y_hat), Sigma_X = Sigma_X_hat)
       } else {
-        result_d_bt <- mr_rr_regularized(y_j_hat_star, x_j_hat_star, r=5, sqrt_Gamma = .sqrt_matrix(solve(Sigma_Y_hat)), Sigma_X = Sigma_X_hat, regularization_rate=regularization_rate)
+        result_d_bt <- mr_rr_regularized(y_j_hat_star, x_j_hat_star, r=5, W = solve(Sigma_Y_hat), Sigma_X = Sigma_X_hat, regularization_rate=regularization_rate)
       }
       result_d_bt_vec = as.vector(result_d_bt$AB)
       for (j in 1:(px*py)){
@@ -172,9 +172,9 @@ nonpara_bootstrap <- function(me_weight = 0.2, regularized = TRUE, regularizatio
 #
 #     # estimate C_drr_hat
 #     if (regularized == FALSE) {
-#       result_d_bt <- mr_rr(y_j_hat_star, x_j_hat_star, r=5, sqrt_Gamma = .sqrt_matrix(solve(Sigma_Y_hat)), Sigma_X = Sigma_X_hat)
+#       result_d_bt <- mr_rr(y_j_hat_star, x_j_hat_star, r=5, W = solve(Sigma_Y_hat), Sigma_X = Sigma_X_hat)
 #     } else {
-#       result_d_bt <- mr_rr_regularized(y_j_hat_star, x_j_hat_star, r=5, sqrt_Gamma = .sqrt_matrix(solve(Sigma_Y_hat)), Sigma_X = Sigma_X_hat, regularization_rate=regularization_rate)
+#       result_d_bt <- mr_rr_regularized(y_j_hat_star, x_j_hat_star, r=5, W = solve(Sigma_Y_hat), Sigma_X = Sigma_X_hat, regularization_rate=regularization_rate)
 #     }
 #     result_d_bt_vec = as.vector(result_d_bt$AB)
 #     for (j in 1:(px*py)){
