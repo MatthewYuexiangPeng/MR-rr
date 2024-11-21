@@ -253,12 +253,12 @@ entry of the estimator comapring to the causal effect C.</p>
 <span><span class="co">#&gt; [1] 0.1135194</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $mean_sd_naive</span></span>
-<span><span class="co">#&gt; [1] 0.3057215</span></span>
+<span><span class="co">#&gt; [1] 0.3712203</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $mean_sd</span></span>
-<span><span class="co">#&gt; [1] 0.3712203</span></span></code></pre>
+<span><span class="co">#&gt; [1] 0.3057215</span></span></code></pre>
 <p>We see that when the IV strength is about 1.5, the MR-rr estimator
-with regularization has a smaller bias and similar standard deviation
+with regularization has both smaller bias and smaller standard deviation
 comparing to the naive MR-rr estimator.</p>
 </div>
 <div class="section level2">
@@ -269,8 +269,8 @@ covers the true causal effect matrix C with about 95% probability.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="st">"The bootstrap coverage rate is:"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "The bootstrap coverage rate is:"</span></span>
-<span><span class="fu"><a href="../reference/nonpara_bootstrap.html">nonpara_bootstrap</a></span><span class="op">(</span>me_weight <span class="op">=</span> <span class="fl">1</span>, regularized <span class="op">=</span> <span class="cn">TRUE</span>, regularization_rate <span class="op">=</span> <span class="fl">1e-13</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.93775</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/nonpara_bootstrap.html">nonpara_bootstrap</a></span><span class="op">(</span>me_weight <span class="op">=</span> <span class="fl">0.5</span>, regularized <span class="op">=</span> <span class="cn">TRUE</span>, regularization_rate <span class="op">=</span> <span class="fl">1e-13</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.9041667</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
